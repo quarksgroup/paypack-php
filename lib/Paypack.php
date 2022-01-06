@@ -103,8 +103,8 @@ class Paypack
      * @property string $ref events for a specific transaction ref
      * @property string $status events with a specific status eg: pending or successfull or failed
      */
-    
-    public static function Events($param)
+
+    public static function Events($param = null)
     {
         return Events($param);
     }
