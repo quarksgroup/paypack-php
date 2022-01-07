@@ -1,5 +1,5 @@
 <?php
 
-require_once "lib/util/token.php";
-require_once "lib/util/secrets.php";
-require_once "lib/util/auth.php";
+require_once __DIR__ . "/token.php";
+require_once __DIR__ . "/secrets.php";
+require_once __DIR__ . "/auth.php";

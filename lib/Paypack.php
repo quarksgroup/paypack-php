@@ -2,16 +2,17 @@
 
 namespace Paypack;
 
-require_once 'lib/util/util.php';
-require_once 'vendor/autoload.php';
-require_once 'lib/HttpClient/httpClient.php';
+require_once dirname(__DIR__ . "../") . '/vendor/autoload.php';
 
-require_once 'lib/methods/Me.php';
-require_once 'lib/methods/Events.php';
-require_once 'lib/methods/Cashin.php';
-require_once 'lib/methods/Cashout.php';
-require_once 'lib/methods/Transaction.php';
-require_once 'lib/methods/Transactions.php';
+require_once __DIR__ . '/util/util.php';
+require_once __DIR__ . '/HttpClient/httpClient.php';
+
+require_once __DIR__ . '/methods/Me.php';
+require_once __DIR__ . '/methods/Events.php';
+require_once __DIR__ . '/methods/Cashin.php';
+require_once __DIR__ . '/methods/Cashout.php';
+require_once __DIR__ . '/methods/Transaction.php';
+require_once __DIR__ . '/methods/Transactions.php';
 
 
 use HttpClient;

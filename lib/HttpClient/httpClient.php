@@ -1,6 +1,6 @@
 <?php
 
-require_once 'lib/util/util.php';
+require_once dirname(__DIR__ . '../') . '/util/util.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
@@ -45,7 +45,7 @@ class HttpClient
                 }
 
                 if ("/api/auth/agents/authorize" !== $request->getUri()->getPath() && $response && $response->getStatusCode() === 401) {
-                    echo "Refreshing Expired Tokens";
+                    echo "Refreshing Expired Tokens\n";
 
                     return self::refreshClientAccessToken();
                 }
@@ -60,7 +60,7 @@ class HttpClient
             if (!Auth::isAuthenticated())
                 if ("/api/auth/agents/authorize" !== $request->getUri()->getPath())
                     self::authorize();
-
+    
             return $request->withAddedHeader("Authorization", Token::getAccessToken());
         }));
 
@@ -86,9 +86,14 @@ class HttpClient
 
             $body = json_decode($response->getBody(), true);
 
+            print_r($body);
             if (200 === $response->getStatusCode()) {
                 Token::setAccessToken($body['access']);
                 Token::setRefreshToken($body['refresh']);
+
+                return ["message" => "Agent Authenticated"];
+            } else {
+                return $body;
             }
         } catch (ClientException $e) {
             return Psr7\Message::toString($e->getResponse());
