@@ -3,9 +3,9 @@
 function Cashin($param)
 {
     if (!isset($param['phone']))
-        return ["message" => "property 'amount' is required"];
+        return ["message" => "property 'phone' is required"];
 
-    if (!isset($param['amount'])) return ["message" => "property 'number' is required"];
+    if (!isset($param['amount'])) return ["message" => "property 'amount' is required"];
 
     $amount = (int) $param['amount'];
     $phone = $param['phone'];
