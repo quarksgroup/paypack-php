@@ -1,6 +1,5 @@
 {
     "name": "quarksgroup/paypack-php",
-    "version": "0.1.0",
     "description": "Paypack SDK for PHP Integration",
     "keywords": [
         "paypack",
