@@ -28,7 +28,7 @@ require_once('/path/to/paypack-php/init.php');
 
 The bindings require the following extensions in order to work properly:
 
--   [`curl`](https://secure.php.net/manual/en/book.curl.php), although you can use your own non-cURL client if you prefer.
+-   [`curl`](https://secure.php.net/manual/en/book.curl.php)
 -   [`json`](https://secure.php.net/manual/en/book.json.php)
 
 If you use Composer, these dependencies should be handled automatically. If you install manually, you'll want to make sure that these extensions are available.
@@ -41,11 +41,6 @@ Integrating Paypack into your app begins with [creating a Paypack account](https
 
 ## Setup
 
-Get [Composer](https://getcomposer.org). For example, on Mac OS:
-
-```bash
-brew install composer
-```
 
 Install dependencies:
 
@@ -60,6 +55,10 @@ Assuming you have your Paypack configuration parameters defined (`client_id`,`cl
 Simple usage looks like:
 
 ```php
+require_once '/vendor/autoload.php';
+
+use Paypack\Paypack;
+
 $paypack = new  Paypack();
 
 $paypack->config([
