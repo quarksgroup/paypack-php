@@ -50,7 +50,7 @@ brew install composer
 Install dependencies:
 
 ```bash
-composer install
+composer require quarksgroup/paypack-php
 ```
 
 ## Quickstart
