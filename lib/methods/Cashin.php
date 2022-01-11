@@ -12,6 +12,8 @@ function Cashin($param)
 
     if (!is_numeric($amount)) return ["message" => "Invalid amount"];
 
+    if (100 < $amount) return ["message" => "Minimum amount to cashin is 100 Rwf"];
+
     try {
         $response = HttpClient::getClient()->post('transactions/cashin', ["json" => ['amount' => $amount, 'number' => $phone]]);
         return json_decode($response->getBody(), true);

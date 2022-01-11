@@ -1,6 +1,3 @@
 <?php
 
-// File generated from our OpenAPI spec
-
-// Paypack singleton
-require __DIR__ . '/lib/Paypack.php';
+require_once __DIR__ . '/lib/Paypack.php';

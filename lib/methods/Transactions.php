@@ -2,6 +2,10 @@
 
 function Transactions($filters = null)
 {
+    if (null != $filters) {
+        if (null == $filters['offset']) $filters['offset'] = "0";
+    }
+
     try {
         $response = HttpClient::getClient()->get('transactions/list?', ["query" => $filters]);
         return json_decode($response->getBody(), true);
