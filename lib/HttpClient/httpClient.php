@@ -60,7 +60,7 @@ class HttpClient
             if (!Auth::isAuthenticated())
                 if ("/api/auth/agents/authorize" !== $request->getUri()->getPath())
                     self::authorize();
-    
+
             return $request->withAddedHeader("Authorization", Token::getAccessToken());
         }));
 
@@ -86,12 +86,9 @@ class HttpClient
 
             $body = json_decode($response->getBody(), true);
 
-            print_r($body);
             if (200 === $response->getStatusCode()) {
                 Token::setAccessToken($body['access']);
                 Token::setRefreshToken($body['refresh']);
-
-                return ["message" => "Agent Authenticated"];
             } else {
                 return $body;
             }
