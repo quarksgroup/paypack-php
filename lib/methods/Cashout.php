@@ -12,7 +12,7 @@ function Cashout($param)
 
     if (!is_numeric($amount)) return ["message" => "Invalid amount"];
 
-    if (100 < $amount) return ["message" => "Minimum amount to cashout is 100 Rwf"];
+    if (100 > $amount) return ["message" => "Minimum amount to cashout is 100 Rwf"];
 
     try {
         $response = HttpClient::getClient()->post('transactions/cashout', ["json" => ['amount' => $amount, 'number' => $phone]]);
