@@ -62,8 +62,8 @@ use Paypack\Paypack;
 $paypack = new  Paypack();
 
 $paypack->config([
-'client_id' => 'xxxx',
-'client_secret' => 'xxxx'
+'client_id' => 'xxxxx',
+'client_secret' => 'xxxxx'
 ]);
 
 $transactions = $paypack->Transactions();
