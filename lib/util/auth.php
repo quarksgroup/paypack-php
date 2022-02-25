@@ -1,5 +1,7 @@
 <?php
 
+namespace Paypack;
+
 // use Token;
 
 class Auth

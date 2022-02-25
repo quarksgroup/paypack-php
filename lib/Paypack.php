@@ -1,7 +1,5 @@
 <?php
 
-namespace Paypack;
-
 require_once __DIR__ . '/util/util.php';
 require_once __DIR__ . '/HttpClient/httpClient.php';
 
@@ -14,7 +12,7 @@ require_once __DIR__ . '/methods/Transactions.php';
 
 
 use HttpClient;
-use Secrets;
+use Paypack\Secrets;
 
 /**
  * Class Paypack.
