@@ -10,6 +10,9 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
+use Paypack\Auth;
+use Paypack\Secrets;
+use Paypack\Token;
 use Psr\Http\Message\RequestInterface;
 
 
