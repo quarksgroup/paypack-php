@@ -1,5 +1,6 @@
 <?php
 
+
 require_once __DIR__ . '/util/util.php';
 require_once __DIR__ . '/HttpClient/httpClient.php';
 
@@ -11,7 +12,6 @@ require_once __DIR__ . '/methods/Transaction.php';
 require_once __DIR__ . '/methods/Transactions.php';
 
 
-use HttpClient;
 use Paypack\Secrets;
 
 /**
