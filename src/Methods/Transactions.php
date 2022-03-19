@@ -1,5 +1,8 @@
 <?php
 
+use GuzzleHttp\Psr7\Message;
+use Paypack\Util\HttpClient;
+
 function Transactions($filters = null)
 {
     if (null != $filters) {

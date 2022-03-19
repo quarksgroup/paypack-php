@@ -1,18 +1,17 @@
 <?php
 
+namespace Paypack;
 
-require_once __DIR__ . '/util/util.php';
-require_once __DIR__ . '/HttpClient/httpClient.php';
+use Paypack\Util\Secrets;
+use Paypack\Util\HttpClient;
 
-require_once __DIR__ . '/methods/Me.php';
-require_once __DIR__ . '/methods/Events.php';
-require_once __DIR__ . '/methods/Cashin.php';
-require_once __DIR__ . '/methods/Cashout.php';
-require_once __DIR__ . '/methods/Transaction.php';
-require_once __DIR__ . '/methods/Transactions.php';
+require_once __DIR__ . '/Methods/Me.php';
+require_once __DIR__ . '/Methods/Events.php';
+require_once __DIR__ . '/Methods/Cashin.php';
+require_once __DIR__ . '/Methods/Cashout.php';
+require_once __DIR__ . '/Methods/Transaction.php';
+require_once __DIR__ . '/Methods/Transactions.php';
 
-
-use Paypack\Secrets;
 
 /**
  * Class Paypack.

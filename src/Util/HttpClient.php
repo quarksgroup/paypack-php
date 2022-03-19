@@ -1,19 +1,21 @@
 <?php
 
-require_once dirname(__DIR__ . '../') . '/util/util.php';
+namespace Paypack\Util;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
+use Paypack\Util\Auth;
+use Paypack\Util\Token;
+use Paypack\Util\Secrets;
+
 use GuzzleHttp\Utils;
+use GuzzleHttp\Client;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Message;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\ClientException;
-use Paypack\Auth;
-use Paypack\Secrets;
-use Paypack\Token;
 use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 
 class HttpClient

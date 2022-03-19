@@ -13,7 +13,15 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Paypack\\": "lib/"
+            "Paypack\\": "src/"
+        },
+        "classmap": [
+            "src/Paypack.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Paypack\\": "src/"
         }
     },
     "authors": [

@@ -1,8 +1,8 @@
 <?php
 
-namespace Paypack;
+namespace Paypack\Util;
 
-// use Token;
+use Paypack\Util\Token;
 
 class Auth
 {

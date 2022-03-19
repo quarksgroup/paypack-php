@@ -1,6 +1,9 @@
 <?php
 
-function Cashout($param)
+use GuzzleHttp\Psr7\Message;
+use Paypack\Util\HttpClient;
+
+function Cashin($param)
 {
     if (!isset($param['phone']))
         return ["message" => "property 'phone' is required"];
@@ -12,10 +15,10 @@ function Cashout($param)
 
     if (!is_numeric($amount)) return ["message" => "Invalid amount"];
 
-    if (100 > $amount) return ["message" => "Minimum amount to cashout is 100 Rwf"];
+    if (100 > $amount) return ["message" => "Minimum amount to cashin is 100 Rwf"];
 
     try {
-        $response = HttpClient::getClient()->post('transactions/cashout', ["json" => ['amount' => $amount, 'number' => $phone]]);
+        $response = HttpClient::getClient()->post('transactions/cashin', ["json" => ['amount' => $amount, 'number' => $phone]]);
         return json_decode($response->getBody(), true);
     } catch (ClientException $e) {
         return Psr7\Message::toString($e->getResponse());

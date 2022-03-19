@@ -1,5 +1,6 @@
 <?php
-namespace Paypack;
+
+namespace Paypack\Util;
 
 class Secrets
 {
