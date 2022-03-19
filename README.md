@@ -8,6 +8,21 @@ Easily request and send funds . Funds are seamlessly delivered to their recipien
 Paypack-php is a wrapper around the Paypack REST API that can be easily integrated with any PHP framework.
 
 
+## Setup
+
+Get [Composer](https://getcomposer.org). For example, on Mac OS:
+
+```bash
+brew install composer
+```
+
+Install dependencies:
+
+```bash
+composer require quarksgroup/paypack-php
+```
+
+
 ## Usage
 
 To use the bindings, use Composer's [autoload](https://getcomposer.org/doc/01-basic-usage.md#autoloading):
@@ -39,19 +54,6 @@ Integrating Paypack into your app begins with [creating a Paypack account](https
 
 ***NOTE:*** Make sure to copy before closing the modal as it's the last time the `client_secret` will be printed to the screen.
 
-## Setup
-
-Get [Composer](https://getcomposer.org). For example, on Mac OS:
-
-```bash
-brew install composer
-```
-
-Install dependencies:
-
-```bash
-composer require quarksgroup/paypack-php
-```
 
 ## Quickstart
 
