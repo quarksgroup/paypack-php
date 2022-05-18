@@ -37,3 +37,4 @@ phpdoc.xml
 
 # Ignore cached PHPUnit results.
 .phpunit.result.cache
+.test.php

@@ -66,7 +66,7 @@ class HttpClient
                 if ("/api/auth/agents/authorize" !== $request->getUri()->getPath())
                     self::authorize();
 
-            return $request->withAddedHeader("Authorization", Token::getAccessToken());
+            return $request->withAddedHeader("Authorization", Token::getAccessToken())->withAddedHeader("X-Webhook-Mode", '127.0.0.1' == $_SERVER["REMOTE_ADDR"] ? 'development' : 'production');
         }));
 
 
