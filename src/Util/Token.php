@@ -29,7 +29,7 @@ class Token
     }
 
     /**
-     * @return null|string The Paypack auth refresh token for connected account
+     * @return null|string The Paypack auth refresh token for connected accounts
      *   requests
      */
     public static function getRefreshToken()
