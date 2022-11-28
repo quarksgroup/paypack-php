@@ -13,6 +13,9 @@ class Auth
      */
     public static function isAuthenticated()
     {
-        return null !== Token::getAccessToken();
+        if (Token::getAccessToken() && Token::getRefreshToken()) {
+            return true;
+        }
+        return false;
     }
 }

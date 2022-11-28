@@ -24,6 +24,4 @@ class Secrets
     {
         self::$client_secrets = $secrets;
     }
-
-    
 }

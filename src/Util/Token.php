@@ -15,6 +15,9 @@ class Token
      */
     public static function getAccessToken()
     {
+        if (isset($_SESSION['paypack_access_token'])) {
+            return $_SESSION['paypack_access_token'];
+        }
         return self::$access;
     }
 
@@ -26,6 +29,10 @@ class Token
     public static function setAccessToken($token)
     {
         self::$access = $token;
+
+        if (isset($_SESSION)) {
+            $_SESSION['paypack_access_token'] = $token;
+        }
     }
 
     /**
@@ -34,6 +41,9 @@ class Token
      */
     public static function getRefreshToken()
     {
+        if (isset($_SESSION['paypack_refresh_token'])) {
+            return $_SESSION['paypack_refresh_token'];
+        }
         return self::$refresh;
     }
 
@@ -45,5 +55,8 @@ class Token
     public static function setRefreshToken($token)
     {
         self::$refresh = $token;
+        if (isset($_SESSION)) {
+            $_SESSION['paypack_refresh_token'] = $token;
+        }
     }
 }

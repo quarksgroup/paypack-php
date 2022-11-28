@@ -10,7 +10,6 @@ use GuzzleHttp\Utils;
 use GuzzleHttp\Client;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Message;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -20,11 +19,20 @@ use GuzzleHttp\Exception\RequestException;
 
 class HttpClient
 {
-    /** @var string Http client for the Paypack API. */
+    /** @var object Http client for the Paypack API. */
     public static $httpClient = null;
 
     /** @var string The base URL for the Paypack API. */
     public static $apiBaseURL = 'https://payments.paypack.rw/api/';
+
+    /** @var string The webhook mode used for requests. */
+    public static $webhookMode = 'development';
+
+    /** @var array The header used for requests. */
+    public static $headers = [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+    ];
 
     /**
      * @return void sets the API Http Client used for requests
@@ -41,7 +49,6 @@ class HttpClient
                 $retries,
                 Request $request,
                 Response $response = null,
-                RequestException $exception = null
             ) {
                 $maxRetries = 3;
 
@@ -50,8 +57,6 @@ class HttpClient
                 }
 
                 if ("/api/auth/agents/authorize" !== $request->getUri()->getPath() && $response && $response->getStatusCode() === 401) {
-                    echo "Refreshing Expired Tokens\n";
-
                     return self::refreshClientAccessToken();
                 }
 
@@ -60,15 +65,20 @@ class HttpClient
         ));
 
         //Add Authorization header with token
-
         $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
             if (!Auth::isAuthenticated())
                 if ("/api/auth/agents/authorize" !== $request->getUri()->getPath())
                     self::authorize();
 
-            return $request->withAddedHeader("Authorization", Token::getAccessToken())->withAddedHeader("X-Webhook-Mode", '127.0.0.1' == $_SERVER["REMOTE_ADDR"] ? 'development' : 'production');
-        }));
+            $request = $request->withHeader('Authorization', 'Bearer ' . Token::getAccessToken());
+            $request = $request->withHeader('X-Webhook-Mode', self::$webhookMode);
 
+            foreach (self::$headers as $key => $value) {
+                $request = $request->withHeader($key, $value);
+            }
+
+            return $request;
+        }));
 
         self::$httpClient = new Client([
             'base_uri' => $baseuri,
@@ -87,42 +97,46 @@ class HttpClient
     public static function authorize()
     {
         try {
-            $response = HttpClient::getClient()->post('auth/agents/authorize', ["json" => Secrets::getClientSecrets()]);
+            $response = self::$httpClient->post('auth/agents/authorize', [
+                'json' => Secrets::getClientSecrets()
+            ]);
 
-            $body = json_decode($response->getBody(), true);
+            $response = json_decode($response->getBody()->getContents());
 
-            if (200 === $response->getStatusCode()) {
-                Token::setAccessToken($body['access']);
-                Token::setRefreshToken($body['refresh']);
-            } else {
-                return $body;
-            }
+            Token::setAccessToken($response->access);
+            Token::setRefreshToken($response->refresh);
+
+            return true;
         } catch (ClientException $e) {
-            return Psr7\Message::toString($e->getResponse());
+            $response = json_decode($e->getResponse()->getBody()->getContents());
+            throw new \Exception($response->message);
         } catch (RequestException $e) {
-            return Psr7\Message::toString($e->getResponse());
+            throw new \Exception($e->getMessage());
         }
     }
 
     public static function refreshClientAccessToken()
     {
-        if (!Token::getRefreshToken()) return false;
         try {
-            $response = self::getClient()->get('auth/refresh/' . Token::getRefreshToken());
-            $body = json_decode($response->getBody(), true);
-
-            if (200 === $response->getStatusCode()) {
-                Token::setAccessToken($body['access']);
-                Token::setRefreshToken($body['refresh']);
+            if (Token::getRefreshToken() == null) {
+                $response = self::$httpClient->post('auth/agents/authorize', [
+                    'json' => Secrets::getClientSecrets()
+                ]);
+            } else {
+                $response = self::$httpClient->post('auth/refresh/' . Token::getRefreshToken());
             }
+            
+            $response = json_decode($response->getBody()->getContents());
+
+            Token::setAccessToken($response->access);
+            Token::setRefreshToken($response->refresh);
 
             return true;
         } catch (ClientException $e) {
-            print_r(Psr7\Message::toString($e->getResponse()));
-            return true;
+            $response = json_decode($e->getResponse()->getBody()->getContents());
+            throw new \Exception($response->message);
         } catch (RequestException $e) {
-            print_r(Psr7\Message::toString($e->getResponse()));
-            return true;
+            throw new \Exception($e->getMessage());
         }
     }
 }

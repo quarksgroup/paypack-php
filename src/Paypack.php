@@ -4,6 +4,7 @@ namespace Paypack;
 
 use Paypack\Util\Secrets;
 use Paypack\Util\HttpClient;
+use Paypack\Util\Token;
 
 require_once __DIR__ . '/Methods/Me.php';
 require_once __DIR__ . '/Methods/Events.php';
@@ -29,15 +30,38 @@ class Paypack
      *
      * @property string $client_id
      * @property string $client_secret
+     * @property string $refresh_token
+     * @property string $access_token
+     * @property string $X-Webhook-Mode
+     * @property array $headers
      *
      */
-    public static function config(array $secrets)
+    public static function config(array $configs)
     {
-        if (!isset($secrets)) {
-            throw ["message" => "Client secrets are required."];
+        if (!isset($configs['client_id']) || !isset($configs['client_secret'])) {
+            throw new \Exception('Client ID and Client Secret are required');
         }
 
-        Secrets::setClientSecrets($secrets);
+        Secrets::setClientSecrets([
+            'client_id' => $configs['client_id'],
+            'client_secret' => $configs['client_secret'],
+        ]);
+
+        if (isset($configs['access_token'])) {
+            Token::setAccessToken($configs['access_token']);
+        }
+
+        if (isset($configs['refresh_token'])) {
+            Token::setRefreshToken($configs['refresh_token']);
+        }
+
+        if (isset($configs['X-Webhook-Mode'])) {
+            HttpClient::setMode($configs['X-Webhook-Mode']);
+        }
+
+        if (isset($configs['headers'])) {
+            HttpClient::setHeaders($configs['headers']);
+        }
     }
 
     /**

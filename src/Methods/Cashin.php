@@ -1,28 +1,56 @@
 <?php
 
-use GuzzleHttp\Psr7\Message;
 use Paypack\Util\HttpClient;
 
-function Cashin($param)
+function Cashin(array $param)
 {
-    if (!isset($param['phone']))
-        return ["message" => "property 'phone' is required"];
+    $client = HttpClient::getClient();
 
-    if (!isset($param['amount'])) return ["message" => "property 'amount' is required"];
+    if (!isset($param['phone'])) {
+        throw new \Exception("Property 'phone' is required to cashin");
+    }
+
+    if (!isset($param['amount'])) {
+        throw new \Exception("Property 'amount' is required to cashin");
+    }
 
     $amount = (int) $param['amount'];
     $phone = $param['phone'];
 
-    if (!is_numeric($amount)) return ["message" => "Invalid amount"];
+    if (!is_numeric($amount)) {
+        throw new \Exception("Property 'amount' must be a number to cashin");
+    }
 
-    if (100 > $amount) return ["message" => "Minimum amount to cashin is 100 Rwf"];
+    if ($param['amount'] < 100) {
+        throw new \Exception("Minimum amount to cashin is 100");
+    }
 
     try {
-        $response = HttpClient::getClient()->post('transactions/cashin', ["json" => ['amount' => $amount, 'number' => $phone]]);
+        $response = $client->post('transactions/cashin', [
+            'json' => [
+                'phone' => $phone,
+                'amount' => $amount,
+            ],
+        ]);
+
         return json_decode($response->getBody(), true);
-    } catch (ClientException $e) {
-        return Psr7\Message::toString($e->getResponse());
-    } catch (RequestException $e) {
-        return Psr7\Message::toString($e->getResponse());
+    } catch (\GuzzleHttp\Exception\ClientException $e) {
+        $response = $e->getResponse();
+        $responseBodyAsString = $response->getBody()->getContents();
+        $responseBody = json_decode($responseBodyAsString, true);
+
+        throw new \Exception($responseBody['message']);
+    } catch (\GuzzleHttp\Exception\ServerException $e) {
+        $response = $e->getResponse();
+        $responseBodyAsString = $response->getBody()->getContents();
+        $responseBody = json_decode($responseBodyAsString, true);
+
+        throw new \Exception($responseBody['message']);
+    } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        throw new \Exception('Failed to connect to Paypack API');
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+        throw new \Exception('Request failed to complete');
+    } catch (\Exception $e) {
+        throw new \Exception('Unknown error occured');
     }
 }
