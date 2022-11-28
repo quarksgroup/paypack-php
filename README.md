@@ -1,7 +1,7 @@
 
 # Paypack PHP
 
-Paypack is a cloud service that offers a solution to merchants in need of a resilient, robust and efficient payment service.
+Paypack is a cloud service that offers a solution to merchants in need of a resilient, robust and efficient payment service. 
 
 Easily request and send funds . Funds are seamlessly delivered to their recipients via mobile money.
 
