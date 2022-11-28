@@ -28,7 +28,7 @@ function Cashout($param)
     try {
         $response = $client->post('transactions/cashout', [
             'json' => [
-                'phone' => $phone,
+                'number' => $phone,
                 'amount' => $amount,
             ],
         ]);

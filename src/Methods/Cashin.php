@@ -28,7 +28,7 @@ function Cashin(array $param)
     try {
         $response = $client->post('transactions/cashin', [
             'json' => [
-                'phone' => $phone,
+                'number' => $phone,
                 'amount' => $amount,
             ],
         ]);
