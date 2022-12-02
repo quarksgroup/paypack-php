@@ -115,6 +115,16 @@ class HttpClient
         }
     }
 
+    public static function setMode($mode)
+    {
+        self::$webhookMode = $mode;
+    }
+
+    public static function setHeaders($headers)
+    {
+        self::$headers = $headers;
+    }
+
     public static function refreshClientAccessToken()
     {
         try {
@@ -125,7 +135,7 @@ class HttpClient
             } else {
                 $response = self::$httpClient->post('auth/refresh/' . Token::getRefreshToken());
             }
-            
+
             $response = json_decode($response->getBody()->getContents());
 
             Token::setAccessToken($response->access);

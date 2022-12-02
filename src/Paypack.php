@@ -55,8 +55,8 @@ class Paypack
             Token::setRefreshToken($configs['refresh_token']);
         }
 
-        if (isset($configs['X-Webhook-Mode'])) {
-            HttpClient::setMode($configs['X-Webhook-Mode']);
+        if (isset($configs['webhook_mode'])) {
+            HttpClient::setMode($configs['webhook_mode']);
         }
 
         if (isset($configs['headers'])) {
