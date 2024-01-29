@@ -31,6 +31,6 @@ function Transaction($transactionId)
     } catch (\GuzzleHttp\Exception\RequestException $e) {
         throw new \Exception('Request failed to complete');
     } catch (\Exception $e) {
-        throw new \Exception('Unknown error occured');
+        throw new \Exception($e->getMessage());
     }
 }
